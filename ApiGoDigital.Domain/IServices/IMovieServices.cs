@@ -9,7 +9,9 @@ namespace ApiGoDigital.Domain.IServices
 {
     public interface IMovieServices
     {
-        Task<Movie> GetLastMovie();
-        Task<TopRated> GetTopRated(string page);
+        Task<Movie> GetLastMovie(string language);
+        Task<ListMovie> GetTopRated(string language, string page, string region);
+        Task<ListMovie> GetTopPopular(string language, string page, string region);
+        Task<ListMovie> SearchMovie(RequestSearchMovie request);
     }
 }

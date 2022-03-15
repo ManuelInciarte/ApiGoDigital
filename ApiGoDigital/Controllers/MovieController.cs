@@ -17,15 +17,27 @@ namespace ApiGoDigital.Controllers
 
 
         [HttpGet("GetLastMovie")]
-        public async Task<Movie> GetLastMovie()
+        public async Task<Movie> GetLastMovie(string language)
         {
-            return await _movieServices.GetLastMovie();
+            return await _movieServices.GetLastMovie(language);
         }
 
-        [HttpGet("GetTopRated/{page}")]
-        public async Task<TopRated> GetTopRated(string page)
+        [HttpGet("GetTopRated")]
+        public async Task<ListMovie> GetTopRated(string language, string page, string region)
         {
-            return await _movieServices.GetTopRated(page);
+            return await _movieServices.GetTopRated(language, page, region);
         }
+        [HttpGet("GetMostPopular")]
+        public async Task<ListMovie> GetTopPopular(string language, string page, string region)
+        {
+            return await _movieServices.GetTopPopular(language, page, region);
+        }
+
+        [HttpPost("SearchMovie")]
+        public async Task<ListMovie> SearchMovie(RequestSearchMovie request)
+        {
+            return await _movieServices.SearchMovie(request);
+        }
+
     }
 }
