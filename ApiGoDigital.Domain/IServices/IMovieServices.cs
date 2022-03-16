@@ -13,5 +13,6 @@ namespace ApiGoDigital.Domain.IServices
         Task<ListMovie> GetTopRated(string language, string page, string region);
         Task<ListMovie> GetTopPopular(string language, string page, string region);
         Task<ListMovie> SearchMovie(RequestSearchMovie request);
+        Task<Movie> GetMovieDetail(string language, string append_to_response, string movie_id);
     }
 }

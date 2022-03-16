@@ -59,6 +59,17 @@ namespace ApiGoDigital.Domain.Services
             return JsonConvert.DeserializeObject<ListMovie>(result);
         }
 
+        public async Task<Movie> GetMovieDetail(string language, string append_to_response, string movie_id)
+        {
+            var parameters1 = movie_id + "?api_key=";
+            var parameters2 = "";
+            if (language is not null) parameters2 = parameters2 + "&language=" + language;
+            if (append_to_response is not null) parameters2 = parameters2 + "&append_to_response=" + append_to_response;
+
+            var result = await _requestHttpDataAccess.CallGetMethod("moviedb", "getDetails", parameters1, parameters2);
+            return JsonConvert.DeserializeObject<Movie>(result);
+        }
+
 
     }
 }

@@ -23,6 +23,8 @@ namespace ApiGoDigital.DataAccess.Entities
 
         [JsonProperty("genre_ids")]
         public List<long> GenresId { get; set; }
+        [JsonProperty("genres")]
+        public List<Genre> Genres { get; set; }
 
         [JsonProperty("homepage")]
         public string Homepage { get; set; }

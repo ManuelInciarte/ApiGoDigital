@@ -39,5 +39,11 @@ namespace ApiGoDigital.Controllers
             return await _movieServices.SearchMovie(request);
         }
 
+        [HttpGet("GetMovieDetail/{movie_id}")]
+        public async Task<Movie> GetMovieDetail(string language, string append_to_response, string movie_id)
+        {
+            return await _movieServices.GetMovieDetail(language, append_to_response, movie_id);
+        }
+
     }
 }

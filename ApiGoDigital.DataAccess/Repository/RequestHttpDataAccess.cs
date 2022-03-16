@@ -18,8 +18,7 @@ namespace ApiGoDigital.DataAccess
             {
                 var configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    //.AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)      
                     .Build();
 
                 return new Integration
@@ -54,6 +53,37 @@ namespace ApiGoDigital.DataAccess
                 using (var client = new HttpClient())
                 using (var request = new HttpRequestMessage(HttpMethod.Get, URL))
                 {                
+                    request.Headers.Add("Accept", "application/json");
+                    using (var response = await client
+                        .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                        .ConfigureAwait(false))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        var result = await response.Content.ReadAsStringAsync();
+                        return result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<string> CallGetMethod(string service, string method, string parameters1, string parameters2)
+        {
+            try
+            {
+                var _set = _integration;
+                var _service = _set.Services.Where(s => s.Name.Equals(service)).ToList().FirstOrDefault();
+                var _method = _service.Methods.Where(m => m.Method.Equals(method)).FirstOrDefault().Value;
+                _method = !string.IsNullOrEmpty(_method) ? string.Format($"/{_method}") : null;
+                var _token = _service.ApiToken;
+                string URL = string.Format($"{_service.URL}{_method}/{parameters1}{_token}{parameters2}");
+
+                using (var client = new HttpClient())
+                using (var request = new HttpRequestMessage(HttpMethod.Get, URL))
+                {
                     request.Headers.Add("Accept", "application/json");
                     using (var response = await client
                         .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
